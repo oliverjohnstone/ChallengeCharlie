@@ -1,0 +1,25 @@
+{
+  "name": "ChallengeCharlie",
+  "version": "0.0.0",
+  "description": "Challenge Charlie arcade game",
+  "main": "main.js",
+  "scripts": {
+    "test": "pliers test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/oliverjohnstone/ChallengeCharlie.git"
+  },
+  "keywords": [
+    "Arcade",
+    "Game",
+    "Challenge",
+    "Charlie"
+  ],
+  "author": "Oliver Johnstone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oliverjohnstone/ChallengeCharlie/issues"
+  },
+  "homepage": "https://github.com/oliverjohnstone/ChallengeCharlie"
+}
