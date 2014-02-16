@@ -100,7 +100,7 @@ module.exports = function (pliers) {
 
       fs.writeFile(join(__dirname, 'site', 'public', 'js', 'build', script), js, 'utf-8', function (err) {
         if (err) return done(err)
-        fs.rename(
+        fs.link(
           join(__dirname, 'site/public/js/vendor/jquery-1.11.0.min.js'),
           join(__dirname, 'site/public/js/build/jquery-1.11.0.min.js'),
           function () {
