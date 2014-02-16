@@ -1,5 +1,6 @@
 node_modules
 properties.json
+site/public/js/build
 
 # OS generated files #
 ######################

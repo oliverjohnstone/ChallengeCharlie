@@ -82,7 +82,7 @@ module.exports = function (pliers) {
 
 
   pliers('buildJs', function (done) {
-    // pliers.mkdirp(join(__dirname, 'site', 'public', 'js', 'build'))
+    pliers.mkdirp(join(__dirname, 'site', 'public', 'js', 'build'))
 
     var script = 'index.js'
       , b = browserify(join(__dirname, 'site', 'public', 'js', 'app', script))
@@ -100,7 +100,12 @@ module.exports = function (pliers) {
 
       fs.writeFile(join(__dirname, 'site', 'public', 'js', 'build', script), js, 'utf-8', function (err) {
         if (err) return done(err)
-        done()
+        fs.rename(
+          join(__dirname, 'site/public/js/vendor/jquery-1.11.0.min.js'),
+          join(__dirname, 'site/public/js/build/jquery-1.11.0.min.js'),
+          function () {
+            done()        
+          })
       })
 
     })
