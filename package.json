@@ -4,7 +4,8 @@
   "description": "Challenge Charlie arcade game",
   "main": "main.js",
   "scripts": {
-    "test": "pliers test"
+    "lint": "./node_modules/.bin/jshint . --reporter=./node_modules/jshint-full-path/index.js",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec -r should"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,21 @@
   "bugs": {
     "url": "https://github.com/oliverjohnstone/ChallengeCharlie/issues"
   },
-  "homepage": "https://github.com/oliverjohnstone/ChallengeCharlie"
+  "homepage": "https://github.com/oliverjohnstone/ChallengeCharlie",
+  "dependencies": {
+    "bunyan": "~0.22.1",
+    "lodash": "~2.4.1",
+    "jshint": "~2.4.3",
+    "mocha": "~1.17.1",
+    "should": "~3.1.2",
+    "istanbul": "~0.2.4",
+    "stylus": "~0.42.2",
+    "stylus-renderer": "0.0.2",
+    "nib": "~1.0.2",
+    "browserify": "~3.29.0",
+    "pliers": "~0.3.2",
+    "jade": "~1.1.5",
+    "through": "~2.3.4",
+    "uglify-js": "~2.4.12"
+  }
 }
