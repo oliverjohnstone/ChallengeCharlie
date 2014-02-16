@@ -1,0 +1,4 @@
+node_modules
+site/public/js/build
+site/public/js/lib/vendor
+site/public/js/app/lib/vendor

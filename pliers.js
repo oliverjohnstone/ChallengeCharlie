@@ -1,5 +1,4 @@
-var bunyan = require('bunyan')
-  , stylus = require('stylus')
+var stylus = require('stylus')
   , stylusRender = require('stylus-renderer')
   , nib = require('nib')
   , join = require('path').join
@@ -16,11 +15,11 @@ module.exports = function (pliers) {
   }
 
   pliers('test', function (done) {
-    pliers.exec('npm test', done)
+    pliers.exec('npm run test', done)
   })
 
   pliers('lint', { description: 'Run lint checks on all site and lib JS files' }, function (done) {
-    pliers.exec('jshint lib site', false, done)
+    pliers.exec('npm run lint', done)
   })
 
   pliers('buildCss', function (done) {
@@ -71,7 +70,5 @@ module.exports = function (pliers) {
 
   })
 
-  pliers('watch', function (done) {
-
-  })
+  pliers('build', 'clean', 'buildCss', 'buildJs')
 }
