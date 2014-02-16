@@ -102,7 +102,8 @@ function serveStaticAsset(req, res, parts, logger) {
     return
   }
 
-  var path = join(__dirname, 'site', 'public', type, 'build', file)
+  var build = type == 'js' || type == 'css' ? 'build' : ''
+    , path = join(__dirname, 'site', 'public', type, build, file)
 
   fs.exists(path, function (exists) {
     if (exists) {

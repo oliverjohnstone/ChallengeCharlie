@@ -45,6 +45,8 @@ module.exports = function (pliers) {
 
 
   pliers('buildCss', function (done) {
+    pliers.mkdirp(join(__dirname, 'site', 'public', 'css', 'build'))
+
     function compile(str, path) {
       return stylus(str)
         .use(nib())
@@ -56,8 +58,17 @@ module.exports = function (pliers) {
     var styleSheets = [ join(__dirname, 'site', 'public', 'css', 'index.styl') ]
 
     stylusRender(styleSheets, { compress: !debug, compile: compile }, function (err) {
-      if (err) pliers.logger.error(err.message)
-      done()
+      if (err) {
+        pliers.logger.error(err.message)
+        done()
+      } else {
+        fs.rename(join(__dirname, 'site/public/css/index.css'), 
+          join(__dirname, 'site/public/css/build/index.css'), 
+          function() {
+            done()
+          }
+        )
+      }
     }).on('log', log)
   })
 
