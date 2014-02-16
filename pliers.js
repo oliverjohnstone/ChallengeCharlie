@@ -8,6 +8,7 @@ var stylus = require('stylus')
   , fs = require('fs')
   , debug = process.env.NODE_ENV === undefined
   , properties = require('./properties')
+  , child = null
 
 module.exports = function (pliers) {
 
@@ -139,7 +140,9 @@ module.exports = function (pliers) {
 
 
   pliers('start', function (done) {
-    pliers.exec('node main.js', done)
+    if (child) child.kill()
+    child = pliers.exec('node main.js')
+    done()
   })
 
 

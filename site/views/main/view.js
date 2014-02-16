@@ -15,5 +15,5 @@ module.exports = function(sl, req) {
 
   function render() {
     return '<h1>Hello</h1>'
-  }
+  } 
 }
