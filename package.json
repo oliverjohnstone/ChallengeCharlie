@@ -38,6 +38,7 @@
     "jade": "~1.1.5",
     "through": "~2.3.4",
     "uglify-js": "~2.4.12",
-    "jshint-full-path": "~1.1.1"
+    "jshint-full-path": "~1.1.1",
+    "mime": "~1.2.11"
   }
 }

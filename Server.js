@@ -1,6 +1,9 @@
 var http = require('http')
   , _ = require('lodash')
   , viewFactory = require('./site/views/factory')
+  , join = require('path').join
+  , fs = require('fs')
+  , mime = require('mime')
 
 module.exports = function(sl) {
   var port = sl.properties.sitePort
@@ -79,5 +82,56 @@ function routeRequest(sl, req, res) {
 function serveStaticAsset(req, res, parts, logger) {
   logger.info('Attempting to serve static asset')
 
+  // static/js/index.js
+  // static/css/index.css
+  // static/img/img.png
+  if (parts.length != 3) {
+    logger.warn(req.path, 'Invalid file path specified')
+    res.writeHead(404)
+    res.end('Resource not found.\n')
+    return
+  }
+
+  var file = parts[parts.length - 1]
+    , type = parts[1]
+
+  if (!_.contains(['js', 'css', 'img'], type)) {
+    logger.warn(req.path, 'Invalid file path specified')
+    res.writeHead(404)
+    res.end('Resource not found.\n')
+    return
+  }
+
+  var path = join(__dirname, 'site', 'public', type, 'build', file)
+
+  fs.exists(path, function (exists) {
+    if (exists) {
+      // Serve file
+      fs.stat(path, function (err, stats) {
+        if (err) {
+          logger.error(err, 'Failed to get file info')
+          res.writeHead(500)
+          res.end('Internal server error\n')
+          return
+        }
+
+        res.writeHead(200, 
+          { 'Content-Type': mime.lookup(path)
+          , 'Content-Length': stats.size
+          })
+
+        var fileStream = fs.createReadStream(path)
+        fileStream.pipe(res)
+        logger.info(path, 'Successfully served static asset')
+
+      })
+    } else {
+      // File not found
+      logger.warn(path, 'File not found')
+      res.writeHead(404)
+      res.end('Resource not found.\n')
+      return
+    }
+  })
 
 }
