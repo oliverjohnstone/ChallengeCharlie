@@ -1,7 +1,7 @@
 var _ = require('lodash')
 
 var defaultProperties = 
-  { sitePort: 80
+  { sitePort: 8888
   , appName: 'Challenge Charlie'
   , host: '127.0.0.1'
   }

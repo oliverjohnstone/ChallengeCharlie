@@ -1,13 +1,20 @@
-var server = require('./Server')
-  , sl = require('./ServiceLocator')
+var server = require('./server')
+  , sl = require('./serviceLocator')
 
-sl.info('Creating new server instance...')
+sl.logger.info('Creating new server instance...')
 
-var instance = new server(sl, function (err) {
-  if (err) sl.logger.error('Failed to create new instance')
-  else sl.logger.info('Successfully created server instance')
-})
+var instance = new server(sl)
 
+if (!instance) {
+  sl.logger.error('Failed to create new instance')
+  return 1
+}
+
+sl.logger.info('Successfully created server instance')
 sl.logger.info('Starting server...')
-if (instance.listen()) sl.logger.info('Server started')
-else sl.logger.error('Failed to start listening to server')
+
+if (instance.listen()) {
+  sl.logger.info('Server started')
+} else {
+  sl.logger.error('Failed to start listening to server')
+}

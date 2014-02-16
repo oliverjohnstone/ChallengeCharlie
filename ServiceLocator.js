@@ -1,6 +1,6 @@
-var bunyon = require('bunyon')
+var bunyan = require('bunyan')
   , properties = require('./properties.json')
-  , log = bunyon.createLogger({ name: properties.appName })
+  , log = bunyan.createLogger({ name: properties.appName })
 
 module.exports = 
   { logger: log

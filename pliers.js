@@ -15,13 +15,19 @@ module.exports = function (pliers) {
     pliers.logger[level](msg)
   }
 
+
+
   pliers('test', function (done) {
     pliers.exec('npm run test', done)
   })
 
+
+
   pliers('lint', { description: 'Run lint checks on all site and lib JS files' }, function (done) {
     pliers.exec('npm run lint', done)
   })
+
+
 
   pliers('buildCss', function (done) {
     function compile(str, path) {
@@ -40,10 +46,14 @@ module.exports = function (pliers) {
     }).on('log', log)
   })
 
+
+
   pliers('clean', function (done) {
     pliers.rm(join(__dirname, 'site', 'public', 'js', 'build'))
     done()
   })
+
+
 
   pliers('buildJs', function (done) {
     pliers.mkdirp(join(__dirname, 'site', 'public', 'js', 'build'))
@@ -71,6 +81,8 @@ module.exports = function (pliers) {
 
   })
 
+
+
   pliers('buildProperties', function (done) {
     fs.writeFile(join(__dirname, 'properties.json'), 
       JSON.stringify(properties[debug ? 'development' : 'production'], null, '\t'), 
@@ -81,6 +93,8 @@ module.exports = function (pliers) {
       done()
     })
   })
+
+
 
   pliers('build', 'buildProperties', 'clean', 'buildCss', 'buildJs')
 }
