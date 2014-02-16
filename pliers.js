@@ -11,6 +11,20 @@ var stylus = require('stylus')
 
 module.exports = function (pliers) {
 
+  pliers.filesets('css', join(__dirname, 'site', 'public', '**/*.styl'))
+  pliers.filesets('browserJs',
+    [ join(__dirname, 'site', 'public', 'js', 'app', '**/*.js') ])
+  pliers.filesets('templates', join(__dirname, 'site', 'public', 'js', 'app', '**/*.jade'))
+  pliers.filesets('serverJs',
+    [ join(__dirname, 'lib/**/*.js')
+    , join(__dirname, '*.js')
+    , join(__dirname, '*.json')
+    , join(__dirname, 'site/views/**/*.js')
+    , join(__dirname, 'site/views/templates/**/*.jade')
+    , join(__dirname, 'site/templates/**/*.jade')
+    ]
+  )
+
   function log(msg, level) {
     pliers.logger[level](msg)
   }
@@ -91,6 +105,48 @@ module.exports = function (pliers) {
 
       if (err) return done(err)
       done()
+    })
+  })
+
+
+  pliers('watch', function (done) {
+
+    pliers.logger.info('Watching for application JavaScript changes')
+    pliers.watch(pliers.filesets.serverJs, function () {
+      pliers.run('start', function () {
+        pliers.logger.info('Restarting server...')
+        pliers.logger.info('Server restarted')
+      })
+    })
+
+    pliers.logger.info('Watching for CSS changes')
+    pliers.watch(pliers.filesets.css, function () {
+      pliers.run('buildCss', function () {
+        pliers.logger.info('CSS rendered')
+      })
+    })
+
+    pliers.logger.info('Watching for browser JavaScript changes')
+    pliers.watch(pliers.filesets.browserJs.concat(pliers.filesets.templates), function () {
+      pliers.run('buildJs', function () {
+        pliers.logger.info('JS built')
+      })
+    })
+    done()
+
+  })
+
+
+
+  pliers('start', function (done) {
+    pliers.exec('node main.js', done)
+  })
+
+
+
+  pliers('go', 'build', function () {
+    pliers.runAll('watch', function () {
+      pliers.run('start')
     })
   })
 
