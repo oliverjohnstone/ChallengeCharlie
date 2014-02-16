@@ -82,7 +82,7 @@ module.exports = function (pliers) {
 
 
   pliers('buildJs', function (done) {
-    pliers.mkdirp(join(__dirname, 'site', 'public', 'js', 'build'))
+    // pliers.mkdirp(join(__dirname, 'site', 'public', 'js', 'build'))
 
     var script = 'index.js'
       , b = browserify(join(__dirname, 'site', 'public', 'js', 'app', script))
