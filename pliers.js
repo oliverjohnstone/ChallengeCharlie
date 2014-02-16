@@ -7,6 +7,7 @@ var stylus = require('stylus')
   , compressJs = require('./pliers/lib/compress-js')
   , fs = require('fs')
   , debug = process.env.NODE_ENV === undefined
+  , properties = require('./properties')
 
 module.exports = function (pliers) {
 
@@ -70,5 +71,16 @@ module.exports = function (pliers) {
 
   })
 
-  pliers('build', 'clean', 'buildCss', 'buildJs')
+  pliers('buildProperties', function (done) {
+    fs.writeFile(join(__dirname, 'properties.json'), 
+      JSON.stringify(properties[debug ? 'development' : 'production'], null, '\t'), 
+      'utf-8', 
+      function (err) {
+
+      if (err) return done(err)
+      done()
+    })
+  })
+
+  pliers('build', 'buildProperties', 'clean', 'buildCss', 'buildJs')
 }
