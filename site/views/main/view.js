@@ -1,5 +1,6 @@
 var renderJade = require('../../lib/render-jade')
   , indexTemplate = renderJade(__dirname + '/../../templates/index.jade')
+  , homeTemplate = renderJade(__dirname + '/../templates/main/home.jade')
 
 module.exports = function(sl, req) {
   return {
@@ -14,6 +15,8 @@ module.exports = function(sl, req) {
   }
 
   function render() {
-    return '<h1>Hello</h1>'
+    return homeTemplate({
+      players: []
+    })
   } 
 }
