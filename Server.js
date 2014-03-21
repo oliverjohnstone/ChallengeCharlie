@@ -29,13 +29,15 @@ module.exports = function(sl) {
 
 function routeRequest(sl, req, res) {
 
-  if(req.method != 'GET') {
+  if(req.method !== 'GET') {
     res.writeHead(405)
     res.end()
   }
 
   var url = require('url').parse(req.url)
     , parts = url.path.split('/')
+    , View = null
+    , view = null
 
   // Remove falsy parts
   parts = _.filter(parts, function (part) {
@@ -48,8 +50,7 @@ function routeRequest(sl, req, res) {
       serveStaticAsset(req, res, parts, sl.logger)
     } else {
       sl.logger.info(parts[0], 'Attempting to load dynamic view')
-      var View = viewFactory(sl, req, parts[0])
-        , view
+      View = viewFactory(sl, req, parts[0])
       if (!View) {
         sl.logger.warn(parts[0], 'Unable to load dynamic view')
         res.writeHead(404)
@@ -57,15 +58,13 @@ function routeRequest(sl, req, res) {
         return
       }
       sl.logger.info(parts[0], 'Serving dynamic view')
-      view = new View(sl, req)
       res.writeHead(200, { 'Content-Type': 'text/html' })
-      res.end(view.render())
+      res.end(new View(sl, req))
     }
   } else {
     sl.logger.info('Serving index page')
     // Dynamic rendering
-    var View = viewFactory(sl, req, 'main')
-      , view
+    View = viewFactory(sl, req, 'main')
     if (!View) {
       sl.logger.warn('main', 'Unable to load dynamic view')  
       res.writeHead(404)
@@ -73,9 +72,8 @@ function routeRequest(sl, req, res) {
       return
     }
     sl.logger.info('main', 'Serving dynamic view')
-    view = new View(sl, req)
     res.writeHead(200, { 'Content-Type': 'text/html' })
-    res.end(view.render())
+    res.end(new View(sl, req))
   }
 }
 
@@ -85,7 +83,7 @@ function serveStaticAsset(req, res, parts, logger) {
   // static/js/index.js
   // static/css/index.css
   // static/img/img.png
-  if (parts.length != 3) {
+  if (parts.length !== 3) {
     logger.warn(req.path, 'Invalid file path specified')
     res.writeHead(404)
     res.end('Resource not found.\n')
@@ -102,7 +100,7 @@ function serveStaticAsset(req, res, parts, logger) {
     return
   }
 
-  var build = type == 'js' || type == 'css' ? 'build' : ''
+  var build = type === 'js' || type === 'css' ? 'build' : ''
     , path = join(__dirname, 'site', 'public', type, build, file)
 
   fs.exists(path, function (exists) {
