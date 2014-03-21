@@ -1,6 +1,6 @@
 var renderJade = require('../../lib/render-jade')
-  , homeTemplate = renderJade(__dirname + '/../templates/main/home.jade')
-  , setupCoinMech = require('./coin-mech')
+  , homeTemplate = renderJade(__dirname + '/../templates/main.jade')
+  , setupCoinMech = require('../../lib/coin-mech')
 
 module.exports = function(sl) {
   setupCoinMech(function (error, coinMech) {
@@ -10,5 +10,5 @@ module.exports = function(sl) {
     })
   })
 
-  return homeTemplate({ players: [] })
+  return homeTemplate({ players: [], properties: sl.properties })
 }

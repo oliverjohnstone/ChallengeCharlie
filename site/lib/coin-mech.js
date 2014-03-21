@@ -11,8 +11,9 @@ module.exports = function (callback) {
     , serialPort
 
   function findPort (cb) {
-    serialList.list(function (error, ports) {
-      _.each(ports, function (port) {
+    serialList(function (error, ports) {
+      if (error) return cb(false)
+      ports.forEach(function (port) {
         console.log(port)
         return cb(port)
       })
@@ -23,7 +24,7 @@ module.exports = function (callback) {
 
   }
 
-  self.open = function (cb, timeout) {
+  function open (cb, timeout) {
     timeout = timeout || 8000
     setTimeout(cb.bind(this, 'Timeout'), timeout)
     serialPort.open(function (error) {
@@ -33,11 +34,6 @@ module.exports = function (callback) {
     })
   }
 
-  self.pause = serialport.pause
-  self.resume = serialPort.resume
-  self.close = serialPort.close
-
-
   findPort(function (port) {
     if (!port) return callback('Unable to find valid port - is the coin mech connected?')
     serialPort = new SerialPort(
@@ -46,6 +42,12 @@ module.exports = function (callback) {
       , parity: parity
       },
       false)
+
+    self.pause = serialport.pause
+    self.resume = serialPort.resume
+    self.close = serialPort.close
+    self.open = open
+
     return callback(null, self)
   })
 }
