@@ -1,19 +1,20 @@
 extends layout
 
 block content
-  .js-pane
-    .glass.page.js-page.home.js-home
-      .top-players
-        h1 Top Ten Players
-        for player in players
-          .player
-            p.name=player.name
-            p.score=player.score
-    .glass.game-info
-        p
-          | &pound;1 for One Game
-          | &pound;2 for Three Games
-          | &pound;3 for Five Games
+  .js-panes
+    .js-pane
+      .glass.page.js-page.home.js-home
+        .top-players
+          h1 Top Ten Players
+          for player in players
+            .player
+              p.name=player.name
+              p.score=player.score
+      .glass.game-info
+          p
+            | &pound;1 for One Game
+            | &pound;2 for Three Games
+            | &pound;3 for Five Games
 
-  .js-pane
-    .glass.page
+    .js-pane
+      .glass.page

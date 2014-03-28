@@ -29,7 +29,7 @@ module.exports = function (sl) {
     if (coins['' + coin]) {
       coinValue = coins['' + coin]
       sl.logger.info('New coin inserted: ' + 
-        (coinValue < 100 ? coinValue + 'p' : '£' + coinValue))
+        (coinValue < 100 ? coinValue + 'p' : '£' + (coinValue / 100)))
       self.emit('coinInserted', coinValue)
     } else {
       sl.logger.warn('Invalid coin: ', coin)
