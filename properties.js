@@ -2,7 +2,7 @@ var _ = require('lodash')
 
 var defaultProperties = 
   { sitePort: 8888
-  , socketIoPort: 8889
+  , socketIOPort: 8889
   , appName: 'Challenge Charlie'
   , host: '127.0.0.1'
   }

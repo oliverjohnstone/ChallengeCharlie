@@ -11,7 +11,7 @@ var EventEmitter = require('events').EventEmitter
 module.exports = function (sl) {
   if (singleton) return singleton
   if (typeof coinMech !== 'object') {
-    sl.logger('Failed to load coin mech: ' + coinMech)
+    sl.logger.error('Failed to load coin mech: ' + coinMech)
     return false
   }
 

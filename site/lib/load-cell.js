@@ -6,13 +6,18 @@ var hid = require('node-hid')
 
 module.exports = function (sl, startListening) {
   if (singleton) return singleton
-  if (typeof loadCell !== 'object') return sl.logger.error('Failed to connect to load cell: ' + 
-    loadCell)
+  if (typeof loadCell !== 'object') 
+    return sl.logger.error('Failed to connect to load cell: ' + loadCell)
 
   var self = new EventEmitter()
     , intervalId
     , parsedValue
     , prevValue = 0
+
+  loadCell.on('error', function (err) {
+    sl.logger.error('Load cell error: ' + err)
+    self.close()
+  })
 
   function parseCellData(data) {
     return data.readInt32LE(3)

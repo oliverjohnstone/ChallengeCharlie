@@ -1,0 +1,24 @@
+extends layout
+  
+block content
+  h1 Error Starting up #{properties.appName}
+  p There was an error starting up this arcade machine please contact your installer for support
+  p Debug Info:
+  table
+    tr
+      th Device
+      th Connected
+    tr
+      td Coin Mech
+      if coinMech
+        td Yes
+      else
+        td No
+
+    tr
+      td Load Cell
+      if loadCell
+        td Yes
+      else
+        td No
+        

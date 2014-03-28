@@ -1,5 +1,9 @@
+var io = require('socket.io-client')
+  , properties = require('../../../../properties.json')
+  , socket = io.connect(properties.host + ':' + properties.socketIOPort)
+  , slida = require('')
+  , turns = 0
 
-// var homeSetup = require('./home/setup.js')
-// $('.js-home').each(function(i, el) {
-//   homeSetup(el)
-// })
+socket.on('startGame', function (numOfTurns) {
+  turns = numOfTurns
+})

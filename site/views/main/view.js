@@ -9,18 +9,32 @@ var renderJade = require('../../lib/render-jade')
 module.exports = function(sl) {
   var coinMech = setupCoinMech(sl)
     , loadCell = setupLoadCell(sl)
-    , currentValue = 0
+    , currentFunds = 0
 
   // Check to see that we have all the components connected, otherwise show an error page
   if (!coinMech) sl.logger.error('Failed to setup coin mech - can\'t continue')
   if (!loadCell) sl.logger.error('Failed to setup load cell - can\'t continue')
-  if (!coinMech || !loadCell) return homeTemplate({ loadCell: !loadCell, coinMech: !coinMech  })
+  if (!coinMech || !loadCell) return errorTemplate(
+    { loadCell: loadCell, coinMech: coinMech, properties: sl.properties })
 
-  // When the user inserts a coin
-  coinMech.on('coinInserted', function (value) {
-    currentValue += value
-    if (currentValue >= minFunds) onSufficientFunds()
+  // Start listening to the sockets server
+  io.listen(sl.properties.socketIOPort).sockets.on('connection', function (socket) {
+    // Wait for the browser to connect to the server 
+    // This way we are safe to start emitting events to the IO
+    startListeningToCoinMech(socket)
+    sl.logger.info('Browser connected')
+
+    socket.on('gameOver', onGameOver)
   })
+
+  function startListeningToCoinMech (socket) {
+    sl.logger.info('Starting to listen to coin mech')
+    // When the user inserts a coin
+    coinMech.on('coinInserted', function (value) {
+      currentFunds += value
+      if (currentFunds >= minFunds) onSufficientFunds(socket)
+    })
+  }
 
   // Calculate the number of turns available to the user with the funds available
   function calculateTurns() {
@@ -29,14 +43,16 @@ module.exports = function(sl) {
   }
 
   // This function is called when the player has entered sufficient funds
-  function onSufficientFunds() {
+  function onSufficientFunds(socket) {
     coinMech.pause()
-    var turns = calculateTurns()
+    socket.emit('startGame', calculateTurns())
+
+    currentFunds = 0
   }
 
   // This function is called when the player has finished all of their turns
   function onGameOver(results) {
-
+    sl.logger.info('Game Over')
   }
 
   return homeTemplate({ players: [], properties: sl.properties })
