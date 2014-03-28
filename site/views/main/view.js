@@ -18,7 +18,7 @@ module.exports = function(sl) {
     { loadCell: loadCell, coinMech: coinMech, properties: sl.properties })
 
   // Start listening to the sockets server
-  io.listen(sl.properties.socketIOPort).sockets.on('connection', function (socket) {
+  io.listen(sl.properties.socketIOPort, { log: false }).sockets.on('connection', function (socket) {
     // Wait for the browser to connect to the server 
     // This way we are safe to start emitting events to the IO
     startListeningToCoinMech(socket)
