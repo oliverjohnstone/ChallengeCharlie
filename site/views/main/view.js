@@ -11,6 +11,8 @@ module.exports = function(sl) {
     , loadCell = setupLoadCell(sl)
     , currentFunds = 0
 
+  sl.application.topTenPlayers = { oliver: 'bob' }
+
   // Check to see that we have all the components connected, otherwise show an error page
   if (!coinMech) sl.logger.error('Failed to setup coin mech - can\'t continue')
   if (!loadCell) sl.logger.error('Failed to setup load cell - can\'t continue')

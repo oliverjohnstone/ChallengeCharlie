@@ -3,6 +3,28 @@ body {
   background-position: left center;
   margin: 0;
 }
+p {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+h1 {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+h2 {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+th td {
+  text-align: center;
+}
+th.wide {
+  width: 200px;
+}
+th.short {
+  width: 100px;
+}
 .container {
   width: 700px;
   height: 200px;

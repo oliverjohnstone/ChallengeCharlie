@@ -4,17 +4,12 @@ block content
   .js-panes
     .js-pane
       .glass.page.js-page.home.js-home
-        .top-players
-          h1 Top Ten Players
-          for player in players
-            .player
-              p.name=player.name
-              p.score=player.score
+        h1 Challenge Charlie
+        .top-players.js-players
+          include players
       .glass.game-info
-          p
-            | &pound;1 for One Game
-            | &pound;2 for Three Games
-            | &pound;3 for Five Games
+        p &pound;1 for One Game
+        p &pound;2 for Three Games
 
     .js-pane
       .glass.page

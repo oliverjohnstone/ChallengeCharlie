@@ -19,7 +19,7 @@ module.exports = function (pliers) {
   pliers.filesets('serverJs',
     [ join(__dirname, 'lib/**/*.js')
     , join(__dirname, '*.js')
-    , join(__dirname, '*.json')
+    // , join(__dirname, '*.json')
     , join(__dirname, 'site/views/**/*.js')
     , join(__dirname, 'site/views/templates/**/*.jade')
     , join(__dirname, 'site/templates/**/*.jade')
