@@ -1,25 +1,37 @@
 var io = require('socket.io-client')
   , properties = require('../../../../properties.json')
   , socket = io.connect(properties.host + ':' + properties.socketIOPort)
-  , turns = 0
   , $panes = $('.js-pane')
-  , $homePane = $panes.eq(0)
-  , $playPane = $panes.eq(1)
-  , $scorePane = $panes.eq(2)
+  , home = require('./home-screen')($panes.eq(0))
+  , play = require('./play-screen')($panes.eq(1), gameOver)
+  , topScore = require('./top-score-screen')
 
 init()
 
 function init() {
   $panes.hide()
-  $homePane.show()
+  home.show()
 }
 
-socket.on('startGame', function (numOfTurns) {
-  $panes.hide()
-  $playPane.fadeIn()
-  turns = numOfTurns
+socket.on('startGame', function (numOfTurns, topTenPlayers) {
+  home.hide()
+  play.show(numOfTurns, topTenPlayers)
+})
+
+socket.on('cellDepressed', function (newVal) {
+  play.cellDepressed(newVal)
+})
+
+socket.on('cellReleased', function (newVal) {
+  play.cellReleased(newVal)
 })
 
 function gameOver() {
-  socket.emit('gameOver', { maxScore: 1 })
+  var position = play.getPosition()
+  console.log(position)
+  if (position) {
+    play.hide()
+    topScore.show(position)
+  }
+  socket.emit('gameOver', position)
 }

@@ -2,7 +2,7 @@ var hid = require('node-hid')
   , loadCell = require('./hid-device')(4303, 21760)
   , singleton = null
   , EventEmitter = require('events').EventEmitter
-  , pollInterval = 100
+  , pollInterval = 40
 
 module.exports = function (sl, startListening) {
   if (singleton) return singleton
@@ -28,8 +28,8 @@ module.exports = function (sl, startListening) {
       loadCell.read(function (err, data) {
         if (err) return self.emit('error', err)
         parsedValue = parseCellData(data)
-        if (parsedValue > prevValue) self.emit('cellDepressed', parsedValue + 'KG')
-        else if (parsedValue < prevValue) self.emit('cellReleased', parsedValue + 'KG')
+        if (parsedValue > prevValue) self.emit('cellDepressed', parsedValue)
+        else if (parsedValue < prevValue) self.emit('cellReleased', parsedValue)
         prevValue = parsedValue
       })
     }, pollInterval)

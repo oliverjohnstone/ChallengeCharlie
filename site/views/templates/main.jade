@@ -4,7 +4,7 @@ block content
   .js-panes
     .js-pane
       .glass.page.js-page.home.js-home
-        h1 Challenge Charlie
+        h1=properties.appName
         .top-players.js-players
           include players
       .glass.game-info
@@ -13,3 +13,15 @@ block content
 
     .js-pane
       .glass.page
+        h1=properties.appName
+        .play-page
+          .js-current-game
+            p.play-msg.js-msg-play Play!
+            p.js-turn Turn 0/0
+            p.js-higest-score Your Highest Score: 0KG
+            p.js-avg-score Your Average Score: 0KG
+            p.cell-value.js-current-cell-value 0KG
+            .js-up-down-icon
+          .messages
+          .top-five-scores
+            include last-scores

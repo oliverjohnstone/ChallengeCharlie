@@ -1,11 +1,13 @@
 h2 Top Ten Players
 table
   tr
+    th.short Pos
     th.wide Name
     th.short Score
-    th.short Date
-  for player in players
+    th.medium When
+  each player, i in players
     tr
+      td=i
       td=player.name
       td=player.score
-      td=player.date
+      td=moment(player.date).calendar()
