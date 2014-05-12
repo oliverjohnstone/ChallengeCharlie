@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Loader</title>
+    <script type="text/javascript" src="site/public/js/vendor/jquery-1.11.0.min.js"></script>
+  </head>
+  <body>
+    Loading Challenge Charlie
+  </body>
+  <script>
+
+    function loadGame() {
+      $.ajax(
+        { url: 'http://localhost:8888/static/css/index.css'
+        , success: function () {
+            window.location.href = "http://localhost:8888"
+          }
+        , error: function () {
+            setTimeout(loadGame, 3000)
+          }
+        }
+      )
+    }
+
+    loadGame()
+  </script>
+</html>

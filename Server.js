@@ -58,7 +58,7 @@ function routeRequest(sl, req, res) {
         return
       }
       sl.logger.info(parts[0], 'Serving dynamic view')
-      res.writeHead(200, { 'Content-Type': 'text/html' })
+      res.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' })
       res.end(view(sl, req))
     }
   } else {
@@ -72,7 +72,7 @@ function routeRequest(sl, req, res) {
       return
     }
     sl.logger.info('main', 'Serving dynamic view')
-    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' })
     res.end(view(sl, req))
   }
 }
@@ -117,6 +117,7 @@ function serveStaticAsset(req, res, parts, logger) {
         res.writeHead(200, 
           { 'Content-Type': mime.lookup(path)
           , 'Content-Length': stats.size
+          , 'Access-Control-Allow-Origin': '*'
           })
 
         var fileStream = fs.createReadStream(path)

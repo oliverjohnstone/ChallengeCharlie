@@ -47,6 +47,7 @@
     "msgpack": "~0.2.2",
     "hiredis": "~0.1.16",
     "socket.io-client": "~0.9.16",
-    "paged": "0.0.6"
+    "paged": "0.0.6",
+    "browjadify": "0.0.2"
   }
 }

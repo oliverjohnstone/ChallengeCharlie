@@ -1,4 +1,5 @@
 var _ = require('lodash')
+  , ledDisplaySetup = require('./led-display')
 
 module.exports = function ($pane, gameOver) {
   var prevVal = 0
@@ -8,14 +9,16 @@ module.exports = function ($pane, gameOver) {
     , topScore = 0
     , highestScore = 0
     , scores = []
-    , $currentScore = $pane.find('.js-current-cell-value')
+    // , $currentScore = $pane.find('.js-current-cell-value')
     , $playMsg = $pane.find('.js-msg-play')
     , $highestScore = $pane.find('.js-higest-score')
     , $avgScore = $pane.find('.js-avg-score')
     , $turnMsg = $pane.find('.js-turn')
+    , $playTable = $pane.find('.js-play-tbl')
     , goOver = false
     , inGame = false
     , goFinishedTimout
+    , ledDisplay = ledDisplaySetup($('.js-cell-display'), 3)
 
   function goFinished() {
     inGame = false
@@ -38,13 +41,13 @@ module.exports = function ($pane, gameOver) {
   }
 
   function addGoToDom(score) {
-
+    // $playTable.prepend(playRow({ turn: turnsTaken, score: score }))
   }
 
   function startGo () {
     topScore = 0
     inGame = true
-    $currentScore.text('0KG')
+    // $currentScore.text('0KG')
     $turnMsg.text('Turn ' + (turnsTaken + 1) + '/' + turns)
     $playMsg.show()
   }
@@ -53,14 +56,16 @@ module.exports = function ($pane, gameOver) {
     if (inGame) {
       clearInterval(goFinishedTimout)
       if (val > topScore) topScore = val
-      $currentScore.text(val + 'KG')
+      // $currentScore.text(val + 'KG')
+      ledDisplay.update(val)
       if (val > 10) setTimeout(function () { goOver = true }, 10000)      
     }
   }
 
   function cellReleased (val) {
     if (inGame) {
-      $currentScore.text(val + 'KG')
+      // $currentScore.text(val + 'KG')
+      ledDisplay.update(val)
       if (val < 10) setTimeout(function () { goOver = true }, 3000)
       if (val === 0 && goOver) goFinished()
       else if (val === 0) goFinishedTimout = setTimeout(goFinished, 2000)
