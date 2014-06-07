@@ -104,7 +104,7 @@ module.exports = function (pliers) {
           join(__dirname, 'site/public/js/vendor/jquery-1.11.0.min.js'),
           join(__dirname, 'site/public/js/build/jquery-1.11.0.min.js'),
           function () {
-            done()        
+            done()
           })
       })
 

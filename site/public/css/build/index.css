@@ -42,6 +42,43 @@
 .cell-display {
   display: inline-block;
   height: 100px;
+  position: relative;
+  top: 10px;
+}
+.up-down-arrow {
+  font-size: 130px;
+  position: relative;
+  float: left;
+  top: 56px;
+  left: 55px;
+  color: #f00;
+  margin-right: -130px;
+}
+.kg-indic {
+  position: relative;
+  right: -125px;
+  top: -38px;
+  font-size: 40px;
+}
+.top-five-scores {
+  position: relative;
+  top: -60px;
+}
+.play-tbl th {
+  width: 100px;
+}
+.play-msg {
+  color: #f00;
+  font-size: 30px;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+.play-page p {
+  -webkit-margin-before: 4px;
+  -webkit-margin-after: 0;
+}
+.play-page h2 {
+  -webkit-margin-after: 5px;
 }
 body {
   background-image: url("/static/img/background-5.jpg");

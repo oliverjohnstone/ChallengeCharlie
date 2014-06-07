@@ -3,6 +3,7 @@ var server = require('./server')
   , fs = require('fs')
   , instance
   , interval = 1
+  , _ = require('lodash')
 
 sl.logger.info('Loading application settings...')
 fs.readFile('application.json', function (err, data) {
@@ -12,6 +13,7 @@ fs.readFile('application.json', function (err, data) {
   }
   sl.logger.info('Application settings loaded')
   sl.application = JSON.parse(data)
+  sl.application.topTenPlayers = _.toArray(sl.application.topTenPlayers)
   sl.application.startUps += 1
   sl.application.upTime = 0
 

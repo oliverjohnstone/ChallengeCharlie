@@ -1,3 +1,5 @@
+require('./blink')
+
 module.exports = function ($container, cellCount) {
   var $display
     , cellMarkup = '<div class="cell-number">' +
@@ -53,7 +55,8 @@ module.exports = function ($container, cellCount) {
   }
 
   return {
-    update: function (newVal) {
+    blink: function () { $display.blink() }
+  , update: function (newVal) {
       turnOff()
       if (newVal > Math.pow(10, cellCount) -1) {
         setAllCells(9)

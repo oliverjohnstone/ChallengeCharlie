@@ -4,16 +4,18 @@ var io = require('socket.io-client')
   , $panes = $('.js-pane')
   , home = require('./home-screen')($panes.eq(0))
   , play = require('./play-screen')($panes.eq(1), gameOver)
-  , topScore = require('./top-score-screen')
+  , topTenUpdater = require('../../../helpers/top-score-calculator')
+  , topTen = []
 
 init()
 
-function init() {
+function init(topTenPlayers) {
   $panes.hide()
-  home.show()
+  home.show(topTenPlayers)
 }
 
 socket.on('startGame', function (numOfTurns, topTenPlayers) {
+  topTen = topTenPlayers
   home.hide()
   play.show(numOfTurns, topTenPlayers)
 })
@@ -28,10 +30,14 @@ socket.on('cellReleased', function (newVal) {
 
 function gameOver() {
   var position = play.getPosition()
-  console.log(position)
   if (position) {
-    play.hide()
-    topScore.show(position)
+    play.newTopScore()
+    console.log(topTen)
+    topTen = topTenUpdater(position, play.getScore(), topTen)
+    console.log(topTen)
+    setTimeout(init.bind(null, topTen), 6000)
+  } else {
+    setTimeout(init, 3000)
   }
-  socket.emit('gameOver', position)
+  socket.emit('gameOver', position, play.getScore())
 }

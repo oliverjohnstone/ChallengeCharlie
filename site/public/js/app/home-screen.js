@@ -1,10 +1,12 @@
 module.exports = function ($pane) {
-  function redraw (players) {
-    // Redraw the page
+
+  function show (topTenPlayers) {
+    if (topTenPlayers) updateScoreTable(topTenPlayers)
+    $pane.show()
   }
 
-  function show () {
-    $pane.show()
+  function updateScoreTable(topTenPlayers) {
+    console.log(topTenPlayers)
   }
 
   function hide () {
@@ -12,7 +14,6 @@ module.exports = function ($pane) {
   }
 
   return {
-    redraw: redraw,
     show: show,
     hide: hide
   }

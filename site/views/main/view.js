@@ -7,6 +7,7 @@ var renderJade = require('../../lib/render-jade')
   , minFunds = 100
   , moment = require('moment')
   , _ = require('lodash')
+  , topScoreUpdater = require('../../helpers/top-score-calculator')
 
 module.exports = function(sl) {
   var coinMech = setupCoinMech(sl)
@@ -67,9 +68,20 @@ module.exports = function(sl) {
     currentFunds = 0
   }
 
+  function updateTopTen(position, score) {
+    sl.application.topTenPlayers = topScoreUpdater(
+      position,
+      score,
+      sl.application.topTenPlayers
+    )
+    console.log(sl.application.topTenPlayers)
+  }
+
   // This function is called when the player has finished all of their turns
-  function onGameOver(results) {
+  function onGameOver(position, score) {
     sl.logger.info('Game Over')
+    console.log(position, score)
+    if (position) updateTopTen(position, score)
     loadCell.pause()
     coinMech.resume()
   }
