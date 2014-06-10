@@ -39,6 +39,7 @@ module.exports = function(sl) {
     // When the user inserts a coin
     coinMech.on('coinInserted', function (value) {
       currentFunds += value
+      socket.emit('fundsRecieved', currentFunds)
       if (currentFunds >= minFunds) onSufficientFunds(socket)
     })
   }

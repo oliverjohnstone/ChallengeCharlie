@@ -14,6 +14,10 @@ function init(topTenPlayers) {
   home.show(topTenPlayers)
 }
 
+socket.on('fundsRecieved', function (funds) {
+  home.updateFunds(funds)
+})
+
 socket.on('startGame', function (numOfTurns, topTenPlayers) {
   topTen = topTenPlayers
   home.hide()

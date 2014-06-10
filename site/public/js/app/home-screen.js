@@ -3,10 +3,12 @@ var moment = require('moment')
 module.exports = function ($pane) {
 
   var $scoreBoard = $pane.find('.js-players-tbl')
+    , $funds = $pane.find('.js-funds')
 
   function show (topTenPlayers) {
     if (topTenPlayers) updateScoreTable(topTenPlayers)
     $pane.show()
+    $funds.html('&pound;0.00')
   }
 
   function updateScoreTable(topTenPlayers) {
@@ -31,8 +33,13 @@ module.exports = function ($pane) {
     $pane.hide()
   }
 
+  function updateFunds(amount) {
+    $funds.html('&pound;' + (amount / 100).toFixed(2))
+  }
+
   return {
     show: show,
-    hide: hide
+    hide: hide,
+    updateFunds: updateFunds
   }
 }
