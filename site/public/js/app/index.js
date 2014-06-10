@@ -30,11 +30,9 @@ socket.on('cellReleased', function (newVal) {
 
 function gameOver() {
   var position = play.getPosition()
-  if (position) {
+  if (position !== false) {
     play.newTopScore()
-    console.log(topTen)
     topTen = topTenUpdater(position, play.getScore(), topTen)
-    console.log(topTen)
     setTimeout(init.bind(null, topTen), 6000)
   } else {
     setTimeout(init, 3000)

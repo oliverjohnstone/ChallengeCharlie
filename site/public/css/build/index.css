@@ -54,6 +54,9 @@
   color: #f00;
   margin-right: -130px;
 }
+.game-cost {
+  color: #00f;
+}
 .kg-indic {
   position: relative;
   right: -125px;

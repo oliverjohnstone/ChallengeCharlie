@@ -3,13 +3,11 @@ extends layout
 block content
   .js-panes
     .js-pane
-      .glass.page.js-page.home.js-home
+      .glass.page.js-page.js-home
         h1=properties.appName
+        h2.game-cost &pound;1 = 1 Game or &pound;2 = 3 Games
         .top-players.js-players
           include players
-      .glass.game-info
-        p &pound;1 for One Game
-        p &pound;2 for Three Games
 
     .js-pane
       .glass.page

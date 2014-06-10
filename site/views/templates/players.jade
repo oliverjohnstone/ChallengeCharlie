@@ -1,13 +1,11 @@
 h2 Top Ten Players
-table
+table.js-players-tbl
   tr
-    th.short Pos
-    th.wide Name
-    th.short Score
+    th.medium Pos
+    th.medium Score
     th.medium When
-  each player, i in players
-    tr
-      td=i
-      td=player.name
+  each player in players
+    tr.js-row
+      td=player.pos
       td=player.score
-      td=moment(player.date).calendar()
+      td=player.date

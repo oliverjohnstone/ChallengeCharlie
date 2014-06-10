@@ -74,17 +74,35 @@ module.exports = function(sl) {
       score,
       sl.application.topTenPlayers
     )
-    console.log(sl.application.topTenPlayers)
+  }
+
+  function formatTopTenPlayers (topTenPlayers) {
+    return _.map(topTenPlayers, function (player, pos) {
+      pos++
+      switch(pos) {
+        case 1: pos += 'st'; break
+        case 2: pos += 'nd'; break
+        case 3: pos += 'rd'; break
+        default: pos += 'th'
+      }
+      return {
+        pos: pos,
+        score: player.score + 'KG',
+        date: moment(player.date).calendar()
+      }
+    })
   }
 
   // This function is called when the player has finished all of their turns
   function onGameOver(position, score) {
     sl.logger.info('Game Over')
-    console.log(position, score)
-    if (position) updateTopTen(position, score)
+    if (position !== false) updateTopTen(position, score)
     loadCell.pause()
     coinMech.resume()
   }
 
-  return homeTemplate({ players: sl.application.topTenPlayers, properties: sl.properties, moment: moment })
+  return homeTemplate(
+    { players: formatTopTenPlayers(sl.application.topTenPlayers)
+    , properties: sl.properties
+    })
 }

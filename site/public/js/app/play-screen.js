@@ -6,7 +6,7 @@ require('./rotate')
 
 module.exports = function ($pane, gameOver) {
   var prevVal = 0
-    , topTen = {}
+    , topTen = []
     , turns = 0
     , turnsTaken = 0
     , topScore = 0
@@ -22,7 +22,8 @@ module.exports = function ($pane, gameOver) {
     , goOver = false
     , inGame = false
     , goFinishedTimout
-    , ledDisplay = ledDisplaySetup($('.js-cell-display'), 3)
+    , ledDisplay
+    , firstShow = true
 
   function goFinished() {
     inGame = false
@@ -35,9 +36,9 @@ module.exports = function ($pane, gameOver) {
       highestScore = topScore
       $highestScore.text('Your Highest Score: ' + highestScore + 'KG')
     }
-    $avgScore.text('Your Average Score: ' + _.reduce(scores, function (memo, num) {
+    $avgScore.text('Your Average Score: ' + (_.reduce(scores, function (memo, num) {
         return memo + num
-      }, 0) / scores.length + 'KG')
+      }, 0) / scores.length).toFixed(2) + 'KG')
     if (turnsTaken >= turns) {
       $playMsg.text('Game Over').show()
       ledDisplay.update(highestScore)
@@ -49,7 +50,7 @@ module.exports = function ($pane, gameOver) {
   }
 
   function addGoToDom(score) {
-    var markup = '<tr><td>' + (turnsTaken + 1) + '</td><td>' + score + 'KG</td></tr>'
+    var markup = '<tr class="js-turn"><td>' + (turnsTaken + 1) + '</td><td>' + score + 'KG</td></tr>'
     $playTable.append(markup)
   }
 
@@ -92,7 +93,20 @@ module.exports = function ($pane, gameOver) {
   }
 
   function show (gos, topTenPlayers) {
-    $playMsg.blink()
+    // Reset the play message and set to blink
+    $playMsg.text('Play!')
+
+    if (firstShow) {
+      $playMsg.blink()
+      firstShow = false
+    }
+
+    // Clear the play table
+    $playTable.find('.js-turn').remove()
+
+    // Remove any old LED display
+    $('.js-display').remove()
+    ledDisplay = ledDisplaySetup($('.js-cell-display'), 3)
     turnsTaken = prevVal = topScore = highestScore = 0
     turns = gos
     scores = []
@@ -110,11 +124,15 @@ module.exports = function ($pane, gameOver) {
   function getPosition () {
     var pos = false
       , size = Object.keys(topTen).length
-    console.log(topTen)
-    _.each(topTen, function (el, index) {
-      if (highestScore >= el.score) pos = index
-    })
-    return !pos && size < 10 ? size + 1 : pos
+
+    for (var i = 0; i < topTen.length; i++) {
+      var el = topTen[i]
+      if (highestScore >= el.score) {
+        pos = i
+        break
+      }
+    }
+    return pos === false && size < 10 ? size : pos
   }
 
   function getScore () {
@@ -122,8 +140,8 @@ module.exports = function ($pane, gameOver) {
   }
 
   function newTopScore() {
-    var pos = getPosition()
-    switch(pos) { 
+    var pos = getPosition() + 1
+    switch(pos) {
       case 1: pos += 'st'; break
       case 2: pos += 'nd'; break
       case 3: pos += 'rd'; break
