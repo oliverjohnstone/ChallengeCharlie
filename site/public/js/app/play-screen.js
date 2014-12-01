@@ -11,7 +11,6 @@ module.exports = function ($pane, gameOver) {
     , turnsTaken = 0
     , topScore = 0
     , highestScore = 0
-    , scores = []
     , $playMsg = $pane.find('.js-msg-play')
     , $highestScore = $pane.find('.js-higest-score')
     , $avgScore = $pane.find('.js-avg-score')
@@ -31,14 +30,10 @@ module.exports = function ($pane, gameOver) {
     $playMsg.hide()
     $arrow.hide()
     turnsTaken++
-    scores.push(topScore)
     if (topScore > highestScore) {
       highestScore = topScore
       $highestScore.text('Your Highest Score: ' + highestScore + 'KG')
     }
-    $avgScore.text('Your Average Score: ' + (_.reduce(scores, function (memo, num) {
-        return memo + num
-      }, 0) / scores.length).toFixed(2) + 'KG')
     if (turnsTaken >= turns) {
       $playMsg.text('Game Over').show()
       ledDisplay.update(highestScore)
