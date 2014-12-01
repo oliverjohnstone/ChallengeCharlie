@@ -14,7 +14,7 @@ module.exports = function ($container, cellCount) {
     , containerMarkup = '<div class="js-display"></div>'
     , cells =
       [ [ 'top-left', 'bottom-left', 'bottom', 'bottom-right', 'top-right', 'top']
-      , [ 'top-left', 'bottom-left' ]
+      , [ 'top-right', 'bottom-right' ]
       , [ 'top', 'top-right', 'centre', 'bottom-left', 'bottom' ]
       , [ 'top', 'top-right', 'centre', 'bottom-right', 'bottom' ]
       , [ 'top-left', 'centre', 'top-right', 'bottom-right' ]
