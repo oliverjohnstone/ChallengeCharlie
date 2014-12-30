@@ -41,16 +41,16 @@
 }
 .cell-display {
   display: inline-block;
-  height: 100px;
+  height: 105px;
   position: relative;
   top: 10px;
 }
 .up-down-arrow {
-  font-size: 130px;
+  font-size: 120px;
   position: relative;
   float: left;
-  top: 32px;
-  left: 55px;
+  top: 42px;
+  left: 28px;
   color: #f00;
   margin-right: -130px;
 }
@@ -58,7 +58,7 @@
   float: left;
   left: 12px;
   position: relative;
-  font-size: 33px;
+  font-size: 25px;
   width: 0px;
 }
 .game-cost {
@@ -66,9 +66,10 @@
 }
 .kg-indic {
   position: relative;
-  right: -125px;
+  right: -328px;
   top: -38px;
   font-size: 40px;
+  width: 100px;
 }
 .top-five-scores {
   position: relative;
@@ -79,6 +80,7 @@
 }
 table tr {
   font-weight: bold;
+  font-size: 12px;
 }
 .play-msg {
   color: #f00;
@@ -125,14 +127,14 @@ th.short {
   width: 40px;
 }
 th.medium {
-  width: 190px;
+  width: 125px;
 }
 th {
   border-bottom: 1px solid #fff;
 }
 .container {
-  width: 700px;
-  height: 200px;
+  width: 500px;
+  height: 120px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
